@@ -2,3 +2,6 @@ DAFTAR HARGA ATK 2022.xlsx
 DAFTAR HARGA ATK 2023.xlsx
 __pycache__
 utils/__pycache__
+myNewFile.xlsx
+.*
+temp*
