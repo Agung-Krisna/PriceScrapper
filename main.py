@@ -28,8 +28,10 @@ for item in tqdm(items_from_excel[:LEN_TOTAL], total=len(items_from_excel[:LEN_T
         item_lost.append(item)
         counter += 1
     total_objects_list.append(obj_list)
-print(f"Number of items that are lost: {counter}")
-print(f"Item(s) that are lost: {item_lost}")
+
+if (counter > 0):
+    print(f"Number of items that are lost: {counter}")
+    print(f"Item(s) that are lost: {item_lost}")
 
 
 est_price = 0
@@ -37,26 +39,12 @@ final_objects = []
 for obj_list in total_objects_list:
     if (len(obj_list) != 0):
         obj = findThirdQuartile(obj_list)# Third quartile is good
-        # obj = findWrapper(obj_list, max)
         est_price += obj.converted_price
         final_objects.append([obj.keyword, obj.item_desc, obj.item_price, obj.item_link])
-print(est_price)
 writeToXlsx(final_objects, "third_quartile3.xlsx")
 
 
 
-# lists_of_items = []
-# for obj_list in total_objects_list:
-#     for obj in obj_list:
-#         dict_object = {"keyword": obj.keyword, 
-#         "item description": obj.item_desc, 
-#         "item price": obj.item_price, 
-#         "item link": obj.item_link}
-#         lists_of_items.append(dict_object)
-
-
-# for item in tqdm(lists_of_items, total=len(lists_of_items)):
-#     insertToCollection(item)
 
 
 # # keywords = ["bola dunia hvs 70 gsm a4", "epson stylus t6642", "epson stylus t6644", "epson stylus t6641", "epson stylus t6643", "epson stylus 003", "isi cutter besar joyko l-150"]

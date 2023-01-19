@@ -1,0 +1,36 @@
+.bg-nord-grey{
+    background-color: #434c5e;
+}
+.bg-nord-dark{
+    background-color: #2e3440;
+}
+.bg-nord-aurora-green{
+    background-color: #a3be8c;
+}
+.bg-nord-frost-blue{
+    background-color: #88c0d0;
+}
+.btn-nord-aurora-green{
+    background-color: #a3be8c
+}
+.btn-nord-aurora-green:hover{
+    background-color: #88c0d0
+}
+.text-nord-white{
+    color: #eceff4
+}
+.text-nord-gray{
+    color: #d8dee9
+}
+
+.text-nord-frost-blue{
+    color: #88c0d0;
+}
+
+.text-nord-aurora-yellow{
+    color: #ebcb8b;
+}
+
+.text-nord-aurora-green{
+    color: #a3be8c;
+}
