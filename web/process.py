@@ -5,12 +5,14 @@ from utils.container import *
 from utils.writter import *
 from utils.currency_converter import *
 from utils.classifier import *
+from uuid import uuid4
+
 
 css_class = ("prd_link-product-name", "prd_link-product-price") # product name, product price
 div_class = "css-974ipl" # divs pointing to a href => links location
 
 def processFile(filepath):
-    print(filepath)
+    dict_to_return = {}
     total_objects_list = []
     items_from_excel = loadXlsx(filepath, "NAMA BARANG")
     print(len(items_from_excel))
@@ -34,8 +36,16 @@ def processFile(filepath):
             obj = findThirdQuartile(obj_list)# Third quartile is good
             est_price += obj.converted_price
             final_objects.append([obj.keyword, obj.item_desc, obj.item_price, obj.item_link])
+    
+    uuid = uuid4()
+    # writeToXlsx(final_objects, f"results/{uuid}.xlsx")
     writeToXlsx(final_objects, "results/result.xlsx")
 
     if (counter > 0):
         print(f"Number of items that are lost: {counter}")
         print(f"Item(s) that are lost: {item_lost}")
+    
+    dict_to_return["number-item-lost"] = counter
+    dict_to_return["items-lost"] = item_lost
+    dict_to_return["uuid"] = uuid
+    return dict_to_return

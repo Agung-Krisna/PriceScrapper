@@ -4,6 +4,7 @@ import re
 import os
 from process import processFile
 from threading import Thread
+from uuid import uuid4
 
 app = Flask(__name__)
 
@@ -27,10 +28,7 @@ def uploadData():
         thread = Thread(target=processFile, args=(filepath, ))
         thread.start()
         # return redirect("/success", code=302)
-        # while thread.is_alive():
-            # landingPage() # show them a landing page
-        
-        return redirect("/success")
+        return redirect("/loading", code=302)
         # return "hello"
         # else give them the result
     else:
@@ -38,18 +36,35 @@ def uploadData():
     
 @app.get("/success")
 def landingPage():
-    while thread.is_alive():
-        return render_template("success.html")
-    return "hello"
+    # while thread.is_alive():
+        # # berikan info ke javascript
+        # # break
+        # # return render_template("success.html")
+    # return "hello"
+    return render_template("success.html")
 
-def checkStillAlive():
-    return thread.is_alive()
+@app.get("/loading")
+def loadingPage():
+    return render_template("loading.html")
 
 filepath = "Example/example.xlsx"
 @app.route("/help")
 def help():
     return render_template("help.html", link = "/example_file")
 
+
+@app.get("/loading_info")
+def loading():
+    return render_template("loading_info.html", thread_alive = thread.is_alive())
+
 @app.route("/example_file")
 def downloadExample():
     return send_file(filepath)
+
+# @app.get("/download/<str:uuid>")
+# def downloadResult():
+    
+
+@app.get("/download")
+def downloadResult():
+    return send_file("results/result.xlsx")
