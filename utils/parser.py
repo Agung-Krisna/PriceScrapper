@@ -13,10 +13,7 @@ def parseFromInsideDiv(rendered_html, div_class):
         links.append(div.a["href"])
     return links
 
-def deleteTokopediaAds(links):
-    max_ = 0
-    for index, val in enumerate(links):
-        if (re.search(r"^https://ta.tokopedia.com*", val)): # ads, skewing results 
-            if index > max_:
-                max_ = index    
-    return max_
+def deleteTokopediaAds(obj_list):
+    obj_to_delete = [obj for obj in obj_list if re.search(r"^https://ta.tokopedia.com", obj.item_link)]
+    obj_to_return = [obj for obj in obj_list if obj not in obj_to_delete]
+    return obj_to_return

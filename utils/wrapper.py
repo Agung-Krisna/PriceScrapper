@@ -1,6 +1,8 @@
 from .parser import *
 from .container import *
 from .classifier import *
+
+
 def findPriceWrapper(query: str, get_function: callable, css_class: str, div_class: str) -> str: # type hints so that I won't forget which parameter takes a function
     html = get_function(query)
     data = []
@@ -18,4 +20,4 @@ def findPriceWrapper(query: str, get_function: callable, css_class: str, div_cla
     for item in flattened:
         obj = TokopediaItems(query, item[0], item[1], item[2])
         obj_list.append(obj)
-    return obj_list
+    return deleteTokopediaAds(obj_list)
