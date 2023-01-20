@@ -17,7 +17,6 @@ def processFile(filepath):
     items_from_excel = loadXlsx(filepath, "NAMA BARANG")
     print(len(items_from_excel))
     LEN_TOTAL = len(items_from_excel)
-    # LEN_TOTAL = 3
     item_lost = []
     counter = 0
     for item in items_from_excel[:LEN_TOTAL]:

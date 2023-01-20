@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+*{
+    font-family: 'Fira Sans', sans-serif;
+}
 .bg-nord-grey{
     background-color: #434c5e;
 }
@@ -11,16 +15,16 @@
     background-color: #88c0d0;
 }
 .btn-nord-aurora-green{
-    background-color: #a3be8c
+    background-color: #a3be8c;
 }
 .btn-nord-aurora-green:hover{
-    background-color: #88c0d0
+    background-color: #88c0d0;
 }
 .text-nord-white{
-    color: #eceff4
+    color: #eceff4;
 }
 .text-nord-gray{
-    color: #d8dee9
+    color: #d8dee9;
 }
 
 .text-nord-frost-blue{

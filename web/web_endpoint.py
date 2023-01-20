@@ -29,18 +29,11 @@ def uploadData():
         thread.start()
         # return redirect("/success", code=302)
         return redirect("/loading", code=302)
-        # return "hello"
-        # else give them the result
     else:
         return "hanya menerima file .xlsx"
     
 @app.get("/success")
 def landingPage():
-    # while thread.is_alive():
-        # # berikan info ke javascript
-        # # break
-        # # return render_template("success.html")
-    # return "hello"
     return render_template("success.html")
 
 @app.get("/loading")
@@ -60,10 +53,6 @@ def loading():
 @app.route("/example_file")
 def downloadExample():
     return send_file(filepath)
-
-# @app.get("/download/<str:uuid>")
-# def downloadResult():
-    
 
 @app.get("/download")
 def downloadResult():
