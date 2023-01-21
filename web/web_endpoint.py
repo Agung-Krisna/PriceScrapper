@@ -17,6 +17,8 @@ thread = None
 def welcome():
     return render_template("home.html")
 
+dict_to_return = {}
+
 @app.post("/upload")
 def uploadData():
     global thread
@@ -24,14 +26,12 @@ def uploadData():
     if (re.match(r"^(.+)(.xlsx)$", f.filename)):
         filepath = os.path.join(excel_dirs, secure_filename(f.filename))
         f.save(filepath)
-        # processFile(filepath)
-        thread = Thread(target=processFile, args=(filepath, ))
+        thread = Thread(target=processFile, args=(filepath, dict_to_return, ))
         thread.start()
-        # return redirect("/success", code=302)
         return redirect("/loading", code=302)
     else:
         return "hanya menerima file .xlsx"
-    
+
 @app.get("/success")
 def landingPage():
     return render_template("success.html")

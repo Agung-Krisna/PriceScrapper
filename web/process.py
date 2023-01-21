@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from utils.getter import *
 from utils.wrapper import *
 from utils.parser import *
@@ -6,16 +7,17 @@ from utils.writter import *
 from utils.currency_converter import *
 from utils.classifier import *
 from uuid import uuid4
+import aiohttp
+import asyncio
+import os
 
 
 css_class = ("prd_link-product-name", "prd_link-product-price") # product name, product price
 div_class = "css-974ipl" # divs pointing to a href => links location
 
-def processFile(filepath):
-    dict_to_return = {}
+def processFile(filepath, dict_to_return):
     total_objects_list = []
     items_from_excel = loadXlsx(filepath, "NAMA BARANG")
-    print(len(items_from_excel))
     LEN_TOTAL = len(items_from_excel)
     item_lost = []
     counter = 0
@@ -35,8 +37,9 @@ def processFile(filepath):
             obj = findThirdQuartile(obj_list)# Third quartile is good
             est_price += obj.converted_price
             final_objects.append([obj.keyword, obj.item_desc, obj.item_price, obj.item_link])
-    
-    uuid = uuid4()
+
+    final_objects.append(["", "Harga Total", str(est_price), ""])
+    # uuid = uuid4()
     # writeToXlsx(final_objects, f"results/{uuid}.xlsx")
     writeToXlsx(final_objects, "results/result.xlsx")
 
@@ -46,5 +49,7 @@ def processFile(filepath):
     
     dict_to_return["number-item-lost"] = counter
     dict_to_return["items-lost"] = item_lost
-    dict_to_return["uuid"] = uuid
-    return dict_to_return
+    # dict_to_return["uuid"] = uuid
+
+    # removing the filepath
+    os.remove(filepath)

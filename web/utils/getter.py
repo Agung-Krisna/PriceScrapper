@@ -28,6 +28,8 @@ def getDataWithRequests(query): # preferred method, a lot faster than selenium
     return html
 
 
+
+
 def getDataWithSelenium(query, order_by="high"): # use selenium when really needed
     headless = Options()
     headless.headless = True # comment to use headful (GUI) browser
