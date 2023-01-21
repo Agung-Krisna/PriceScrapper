@@ -57,3 +57,7 @@ def downloadExample():
 @app.get("/download")
 def downloadResult():
     return send_file("results/result.xlsx")
+
+@app.get("/items_lost")
+def filesLost():
+    return dict_to_return

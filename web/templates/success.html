@@ -8,8 +8,29 @@
     <h3 class="text-nord-aurora-green"> Unduhan Gagal?</h3> 
     <p class="text-nord-white"> Klik tombol dibawah untuk mengunduh kembali </p>
     <button class="btn btn-nord-aurora-green" onclick="redirect()" onhover>Download File</button>
-    
+    <div class="d-none" id="errorCard">
+        <div class="d-flex justify-content-center my-3 text-nord-aurora-yellow">    
+            <div class="card col-md-5 bg-nord-dark">
+                    <div class="card-header text-nord-aurora-red">
+                        Pencarian Tidak Ditemukan
+                    </div>
+                    <div class="card-body">
+                        <p>Ketika melakukan pencarian terdapat <span id="numOfLostItems" class="text-nord-aurora-red"></span> barang yang tidak dapat ditemukan</p>
+                        <p>Barang tersebut diantaranya:</p>
+                        <ol id="lostItems" class="text-nord-aurora-red"></ol>
+                    </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <p class="text-nord-white">Tips untuk mendapatkan hasil lebih baik</p>
+            <ul>
+                <li class="text-nord-white"> Pastikan tidak ada <em> typo </em> pada pencarian </li>
+                <li class="text-nord-white"> Usahakan untuk menyertakan satuan yang sesuai (contoh: 1 box, 1 lusin, dll.) </li>
+            </ul>
+        </div>
+    </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 {% endblock %}
 
 {% block scripts %}
@@ -18,5 +39,17 @@ window.onload = function(){
 };
 function redirect(){
     window.location.replace("/download");
-}
+};
+$(function(){
+    $.getJSON("/items_lost", function(response){
+        if (response["number-item-lost"] > 0){
+            console.log("error happened");
+            $("#errorCard").removeClass("d-none");
+            $("#numOfLostItems").html(response["number-item-lost"]);
+            $.each(response["items-lost"], function(key, value){
+                $("#lostItems").append("<li>" + value + "</li>");
+            });
+        }
+    });
+});
 {% endblock %}
