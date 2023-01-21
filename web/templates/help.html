@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %} Help {% endblock %}
+
+{% block content %}
+<div class="container-fluid p-3">
+    <h1 class="text-nord-frost-blue">
+        Penggunaan Aplikasi
+    </h1>
+    <p class="text-nord-gray"> Untuk dapat menggunakan aplikasi ini, pengguna perlu mempersiapkan sebuah file excel (dengan ekstensi <code class="text-info">".xlsx"</code>) dimana didalamnya terdapat sebuah kolom dengan judul "NAMA BARANG".</p>
+    <h3 class="text-nord-frost-blue">Contoh File Excel</h3>
+    <p class="text-nord-gray"> Berikut merupakan contoh dari file yang dapat diupload kedalam aplikasi web </p>
+    <a href="{{ link }}" class="btn btn-nord-aurora-green" onhover> Contoh file excel </a> 
+</div>
+{% endblock %}

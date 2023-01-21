@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %} Loading {% endblock %}
+{% block content%}
+<div class="container my-3 d-flex flex-column align-items-center justify-content-center">
+    <h1 class="text-nord-white">Mohon Tunggu Sebentar</h1>
+    <div id="loading" display="block">
+        <img src={{url_for("static", filename="loading.svg")}}>
+    </div>
+</div>
+<div id="response"></div>
+{% endblock %}
+
+
+{% block scripts %}
+myInterval = setInterval(function(){
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/loading_info');
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        if (xhr.responseText == "True")
+        {
+            document.getElementById("loading").style.display = "block";
+        }
+        else if (xhr.responseText == "False")
+        {
+            document.getElementById("loading").style.display = "none";
+            window.location.replace("/success")
+            clearInterval(myInterval)
+        }
+        console.log(xhr.responseText);
+      }
+    };
+    xhr.send();
+  }, 1000);
+{% endblock %}

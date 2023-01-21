@@ -5,3 +5,4 @@ temp*
 bots/*
 Images/*
 mockups/*
+!templates

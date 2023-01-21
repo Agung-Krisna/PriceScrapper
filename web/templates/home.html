@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+<div class="container-fluid p-3">
+    <h1 class="text-nord-frost-blue"> Price Scrapper </h1>
+    <p class ="text-nord-white"> Dapatkan estimasi harga dari berbagai barang secara <span class="text-nord-aurora-yellow">instan!</span></p>
+    <form method="post" action="/upload" enctype="multipart/form-data">
+        <div class="mb-2 col-md-5">
+          <label for="formFile" class="form-label text-nord-gray">Masukkan file Excel</label>
+          <input class="form-control bg-nord-frost-blue" type="file" id="formFile" name="file">
+        </div>
+        <button type="submit" class="btn btn-nord-aurora-green mb-3" onhover>Upload File</button>
+    </form>
+  </div>
+{% endblock %}
