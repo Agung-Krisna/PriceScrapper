@@ -12,6 +12,8 @@ import asyncio
 import os
 
 
+
+
 css_class = ("prd_link-product-name", "prd_link-product-price") # product name, product price
 div_class = "css-974ipl" # divs pointing to a href => links location
 
@@ -53,3 +55,4 @@ def processFile(filepath, dict_to_return):
 
     # removing the filepath
     os.remove(filepath)
+

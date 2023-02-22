@@ -14,8 +14,8 @@ import aiohttp
 import asyncio
 from aiohttp_requests import requests
 from statistics import mean, median, mode
-
-
+from utils.thread_request import little_wrapper
+import time
 css_class = ("prd_link-product-name", "prd_link-product-price") # product name, product price
 div_class = "css-974ipl" # divs pointing to a href => links location
 
@@ -54,8 +54,8 @@ async def getDataWithAiohttp(session, url):
     html = None
     while html is None:
         try:
-            user_agent = {"User-Agent": random.choice(USER_AGENTS).replace("\n", "")}
-            async with session.get(url, headers=user_agent, timeout=0.3) as resp:
+            user_agent = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36'}
+            async with session.get(url, headers=user_agent) as resp:
                 html = await resp.json()
         except Exception as e:   
             continue
@@ -67,12 +67,24 @@ async def getDataWithAioWrapper(query):
     html = None
     while html is None:
         try:
-            user_agent = {"User-Agent": random.choice(USER_AGENTS).replace("\n", "")}
-            async with requests.get(url, headers=user_agent, timeout=0.3) as resp:
+            header = {
+            "upgrade-insecure-requests": "1",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.53 Safari/537.36",
+            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+            "sec-ch-ua": "\".Not/A)Brand\";v=\"99\", \"Google Chrome\";v=\"103\", \"Chromium\";v=\"103\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Linux\"",
+            "sec-fetch-site": "none",
+            "sec-fetch-mod": "",
+            "sec-fetch-user": "?1",
+            "accept-encoding": "gzip, deflate, br",
+            "accept-language": "fr-CH,fr;q=0.9,en-US;q=0.8,en;q=0.7"}
+            async with requests.get(url, headers=header) as resp:
                 html = await resp.text()
         except Exception as e:   
             continue
     return html
+
 
 async def main(query_list):
     async with aiohttp.ClientSession() as session:
@@ -85,14 +97,24 @@ async def main(query_list):
         for item in returned_list:
             print(item)
 
+items_from_excel = loadXlsx("DAFTAR HARGA ATK 2023.xlsx", "NAMA BARANG", 1)
+def asyncProcessMain():
+    asyncFindPriceWrapper(items_from_excel, css_class, div_class)
 def processMain():
-    items_from_excel = loadXlsx("DAFTAR HARGA ATK 2023.xlsx", "NAMA BARANG", 1)
-    asyncio.run(main(items_from_excel))
-    # asyncio.run(getDataWithAioWrapper(items_from_excel[0]))
+    # print(items_from_excel)
+    for query in items_from_excel:
+        asyncio.run(getDataWithAioWrapper(query))
+    #  asyncio.run(getDataWithAioWrapper(items_from_excel[0]))
 
-processMain()
-    
+asyncio.run(processMain())
 
+start = time.time()
+print(asyncProcessMain())
+print("Time required", round(time.time() - start, 2))
+
+start = time.time()
+finalFunction()
+print("Time required", round(time.time() - start, 2))
 
 # # keywords = ["bola dunia hvs 70 gsm a4", "epson stylus t6642", "epson stylus t6644", "epson stylus t6641", "epson stylus t6643", "epson stylus 003", "isi cutter besar joyko l-150"]
 # keywords = ["bola dunia hvs 70 gsm a4"]

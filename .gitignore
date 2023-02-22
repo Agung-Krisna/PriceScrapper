@@ -6,3 +6,5 @@ bots/*
 Images/*
 mockups/*
 !templates
+web/build
+web/dist

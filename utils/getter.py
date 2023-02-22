@@ -13,7 +13,7 @@ def loadXlsx(filepath, column_name, sheet_num=0):
     xls = pd.ExcelFile(r"{}".format(filepath)) # opening excelfile
     sheet = xls.parse(sheet_num) # getting the first sheet
     item_name = sheet[column_name] # gettting the column name
-    return item_name
+    return item_name.dropna()
 
 
 def getDataWithRequests(query): # preferred method, a lot faster than selenium
@@ -26,8 +26,6 @@ def getDataWithRequests(query): # preferred method, a lot faster than selenium
         except Exception as e:
             continue
     return html
-
-
 def getDataWithSelenium(query, order_by="high"): # use selenium when really needed
     headless = Options()
     headless.headless = True # comment to use headful (GUI) browser
